@@ -1,0 +1,54 @@
+name: DevOps-Lead PR Review
+
+# THIN CALLER STUB. All review logic lives in
+# Nova-Caelum/devops-lead/.github/workflows/devops-lead-pr-review.yml
+# (source of truth). The full-SHA `uses:` pin below is the review gate for
+# logic changes — never re-point it to @main.
+#
+# Standard DevOps-Lead behaviour and comms. The only per-repo tuning is a
+# wider auto_merge_paths / narrower escalate_paths split than the other
+# callers, so inert PRs on a docs-and-prose repo don't queue for a manual
+# merge. (Daniel, 2026-09-07.)
+#
+# `.mcp.json` declares a command executed on every user's machine at plugin
+# install; it and `.claude-plugin/**` are the supply-chain surface and stay
+# on the escalate list.
+#
+# Fork safety: the `if:` gate restricts the job to PRs whose head repo is
+# owned by this org, so fork PRs never see org secrets.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  devops-lead-review:
+    if: ${{ github.event.pull_request.head.repo.owner.login == github.repository_owner }}
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: read
+      id-token: write
+    uses: Nova-Caelum/devops-lead/.github/workflows/devops-lead-pr-review.yml@0d1b16cee071fcd8896c7dc5130a2644f0360a30
+    secrets: inherit
+    with:
+      persona_source_repo: 'Nova-Caelum/devops-lead'
+      persona_source_ref: 'main'
+      persona_path: '.persona-source/.claude/agents/devops-lead.md'
+      auto_merge_paths: |
+        **/*.md — all Markdown, including README.md and skill bodies and reference files under skills/**
+        LICENSE, .gitignore, .gitattributes
+        skills/**/evals/*.json — eval case additions and edits
+        YAML frontmatter edits to a SKILL.md that leave the skill `name` unchanged
+      escalate_paths: |
+        .mcp.json — declares a command executed on every user's machine at install
+        .claude-plugin/** — plugin.json and marketplace.json control what loads and from where
+        .github/workflows/**
+        any new file that is not Markdown or JSON
+        any change to a skill `name` in SKILL.md frontmatter
+      worklog_project: 'no-mistakes-plugin'
+      repo_context_description: >-
+        the public no-mistakes plugin repo — three verification-discipline skills published as an
+        installable Claude Code and Codex CLI plugin, where the shipped content is almost entirely
+        Markdown skill prose
