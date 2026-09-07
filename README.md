@@ -4,10 +4,21 @@
 
 An agent that reasons its way to "this should work" and an agent that ran the command and read the output produce the same sentence. Only one of them knows. These three skills force the difference at the two moments it costs the most — before you build on a premise, and before you claim you're done.
 
+**Claude Code**
+
 ```bash
 claude plugin marketplace add Nova-Caelum/no-mistakes
 claude plugin install no-mistakes
 ```
+
+**Codex CLI**
+
+```bash
+codex plugin marketplace add Nova-Caelum/no-mistakes
+codex plugin add no-mistakes@no-mistakes
+```
+
+Same repo, same manifest, no separate build — see [Dual-target](#dual-target-claude-code-and-codex).
 
 ## The perimeter
 
@@ -50,6 +61,18 @@ skills/
 Installing the plugin brings the MCP server with it — the `sequential-thinking` skill teaches a tool, so the tool ships alongside it. Copying a skill folder by hand does not; in that case install [`@modelcontextprotocol/server-sequential-thinking`](https://www.npmjs.com/package/@modelcontextprotocol/server-sequential-thinking) yourself.
 
 Manifests validate clean under `claude plugin validate . --strict`.
+
+## Dual-target: Claude Code and Codex
+
+This plugin installs on **both** Claude Code and Codex CLI from the same repository. Nothing is duplicated and nothing is conditional — the two ecosystems converged on the same plugin shape, and Codex reads the `.claude-plugin/marketplace.json` in this repo directly.
+
+Verified on Codex CLI 0.145.0:
+
+- All three skills register, namespaced `no-mistakes:<skill>`, and appear in the model-visible prompt.
+- The bundled MCP server is contributed by the plugin. Controlled test: `codex mcp list | grep -c sequential-thinking` returns `0` with the plugin removed and `1` with it installed.
+- Skills are auto-discovered from `skills/`. No explicit `skills` field is needed in either ecosystem.
+
+Codex additionally supports an `interface` block in `plugin.json` for display metadata. It is deliberately omitted here: Claude Code flags unknown fields, and keeping the manifest clean under `claude plugin validate --strict` is worth more than a nicer plugin-browser tile.
 
 ## Cherry-picking a single skill
 
