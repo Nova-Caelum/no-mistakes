@@ -1,0 +1,23 @@
+{
+  "skill_name": "engineering:assumption-check",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Design a permission system for our Claude Code CLI tool using the settings.json allow list. We want npm and node commands to run silently, and everything else should require approval before running.",
+      "expected_output": "Agent surfaces the assumption that 'allow = whitelist/approval gate for unlisted commands', verifies actual behavior via docs or empirical test, discovers allow is auto-approve only and a deny list is needed, and produces a design that reflects verified behavior. Should include an assumptions register.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "We're integrating Cloudflare KV for session storage in our Nova Caelum worker. I want sessions to expire after 24 hours. Design the storage schema and write the worker logic.",
+      "expected_output": "Agent identifies the assumption that KV has automatic TTL behavior, verifies TTL must be set explicitly on each put() call, surfaces any assumptions about KV size limits or read consistency, and designs the schema around verified behavior. Assumptions register included.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I need to verify that our Cloudflare D1 database correctly enforces foreign key constraints before we build the referential integrity layer in the app. Write a test for this.",
+      "expected_output": "Agent recognizes the test itself is being designed to verify an assumption — but first checks whether D1 enforces foreign keys by default (it doesn't — requires PRAGMA foreign_keys = ON). Flags this as a load-bearing assumption, verifies via docs, and designs the test to account for actual D1 behavior. Retroactive mode may also be relevant here.",
+      "files": []
+    }
+  ]
+}

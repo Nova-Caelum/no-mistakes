@@ -1,0 +1,13 @@
+{
+  "name": "no-mistakes",
+  "owner": {
+    "name": "Nova Caelum"
+  },
+  "plugins": [
+    {
+      "name": "no-mistakes",
+      "source": "./"
+    }
+  ],
+  "description": "Nova Caelum's verification-discipline plugin \u2014 a single-plugin marketplace hosting no-mistakes."
+}
