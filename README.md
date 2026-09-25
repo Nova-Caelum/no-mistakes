@@ -90,7 +90,7 @@ They fire on demand, but they're most effective wired into a workflow that guara
 - **sequential-thinking** — Nova Caelum; guidance layer for the MCP server by Anthropic / Model Context Protocol.
 - **verification-before-completion** — adapted by Nova Caelum from [`obra/superpowers`](https://github.com/obra/superpowers) (MIT, © 2025 Jesse Vincent).
 
-MIT licensed. See [LICENSE](LICENSE).
+MIT licensed. See [LICENSE](LICENSE); third-party attribution in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ---
 
