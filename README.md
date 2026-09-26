@@ -1,5 +1,9 @@
 # No-Mistakes
 
+[![validate-plugin](https://github.com/Nova-Caelum/no-mistakes/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Nova-Caelum/no-mistakes/actions/workflows/ci.yml)
+
+CI validates the plugin manifests, `.mcp.json`, and every skill's frontmatter and eval fixtures on push and pull request to `main`. It does not run the skills themselves — that requires a live Claude Code session (`claude plugin eval`).
+
 **Three Claude Code skills that stop an agent substituting reasoning for evidence.**
 
 An agent that reasons its way to "this should work" and an agent that ran the command and read the output produce the same sentence. Only one of them knows. These three skills force the difference at the two moments it costs the most — before you build on a premise, and before you claim you're done.
