@@ -30,7 +30,7 @@ jobs:
       issues: write
       actions: read
       id-token: write
-    uses: Nova-Caelum/devops-lead/.github/workflows/devops-lead-pr-review.yml@0d1b16cee071fcd8896c7dc5130a2644f0360a30
+    uses: Nova-Caelum/devops-lead/.github/workflows/devops-lead-pr-review.yml@9bafb290bf2473beedfdcbd4cb7461ccdb82064b
     secrets: inherit
     with:
       persona_source_repo: 'Nova-Caelum/devops-lead'
@@ -42,6 +42,7 @@ jobs:
         skills/**/evals/*.json — eval case additions and edits
         YAML frontmatter edits to a SKILL.md that leave the skill `name` unchanged
       escalate_paths: |
+        The numbered conditions below are this repo's authoritative escalate list; defer to them instead of the persona's _agentOS-specific list, preserving its default-merge posture, security asymmetry and no additional path-only holds.
         .mcp.json — declares a command executed on every user's machine at install
         .claude-plugin/** — plugin.json and marketplace.json control what loads and from where
         .github/workflows/**
